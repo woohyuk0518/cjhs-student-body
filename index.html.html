@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>충주고등학교 학생회 공약 안내</title>
+    <style>
+        :root {
+            --primary-color: #0a174e; /* 충주고 남색 */
+            --secondary-color: #1f3c88;
+            --background-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --accent-color: #e5a925;
+        }
+
+        body {
+            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* 상단 헤더 (로고 배경 맞춤) */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .school-logo {
+            width: 70px;
+            height: auto;
+            background-color: white; /* 로고가 잘 보이도록 흰색 원형 배경 추가 */
+            border-radius: 50%;
+            padding: 5px;
+            object-fit: contain; /* 이미지 비율 유지 */
+        }
+
+        .header-text h1 {
+            margin: 0;
+            font-size: 2.2em;
+            letter-spacing: 1px;
+        }
+
+        .header-text p {
+            margin: 8px 0 0 0;
+            font-size: 1em;
+            color: #d1d8f0;
+        }
+
+        /* 로비 (카테고리 네비게이션) */
+        nav {
+            background-color: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .tab-btn {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            background-color: #ebf0ff;
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* 메인 컨텐츠 영역 */
+        main {
+            flex-grow: 1;
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* 부서별 카드 (기본적으로 숨김 처리) */
+        .dept-section {
+            display: none;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            animation: fadeIn 0.4s ease;
+        }
+
+        .dept-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 로비 기본 환영 화면 */
+        #lobby-welcome {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        #lobby-welcome h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        #lobby-welcome p {
+            color: var(--text-muted);
+            font-size: 1.1em;
+        }
+
+        /* 부서 내용 디자인 */
+        .dept-title {
+            font-size: 1.8em;
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .members-info {
+            text-align: center;
+            font-size: 1.1em;
+            color: var(--text-main);
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .members-info span {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-right: 5px;
+        }
+
+        .pledge-group {
+            margin-bottom: 30px;
+        }
+
+        .pledge-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .pledge-role {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+            background-color: var(--secondary-color);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+        }
+
+        .pledge-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .pledge-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+            line-height: 1.6;
+        }
+
+        .pledge-list li::before {
+            content: '■';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-size: 0.8em;
+            top: 5px;
+        }
+
+        /* 하단 푸터 */
+        footer {
+            background-color: #e2e6ea;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <!-- 첨부해주신 파일명과 정확히 일치하도록 src 속성을 설정했습니다. -->
+            <img src="충주고등학교 로고.jpg" alt="충주고등학교 로고" class="school-logo">
+            <div class="header-text">
+                <h1>충주고등학교 학생회</h1>
+                <p>소통하고 실천하는 부서별 공약 안내</p>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <button class="tab-btn" onclick="showSection('executive', this)">회장단</button>
+            <button class="tab-btn" onclick="showSection('discipline', this)">선도부</button>
+            <button class="tab-btn" onclick="showSection('promotion', this)">홍보부</button>
+            <button class="tab-btn" onclick="showSection('finance', this)">총무부</button>
+            <button class="tab-btn" onclick="showSection('broadcasting', this)">방송부</button>
+            <button class="tab-btn" onclick="showSection('sports', this)">체육부</button>
+            <button class="tab-btn" onclick="showSection('academic', this)">학업부</button>
+            <button class="tab-btn" onclick="showSection('culture', this)">문예부</button>
+            <button class="tab-btn" onclick="showSection('environment', this)">환경부</button>
+        </div>
+    </nav>
+
+    <main>
+        <!-- 첫 접속 시 안내 화면 -->
+        <div id="lobby-welcome" class="dept-section active">
+            <h2>학생회 공약 안내 사이트에 오신 것을 환영합니다!</h2>
+            <p>위의 부서 버튼을 누르시면 해당 부서의 상세 공약을 확인할 수 있습니다.</p>
+        </div>
+
+        <!-- 회장단 -->
+        <div id="executive" class="dept-section">
+            <h2 class="dept-title">회장단</h2>
+            <div class="members-info">
+                <span>학생회장</span> 이승헌 | 
+                <span>2학년 부회장</span> 최우혁 | 
+                <span>1학년 부회장</span> 김진환
+            </div>
+            <div class="pledge-group">
+                <div class="pledge-role">주요 공약</div>
+                <ul class="pledge-list">
+                    <li>학생회 팀원제 운영</li>
+                    <li>합동부스 행사 추진</li>
+                    <li>학습 커뮤니티 개설</li>
+                    <li>방학 중 학교 프로그램 운영 (여름 및 겨울학교)</li>
+                    <li>방송부 신설</li>
+                    <li>문화 활동 다양화</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 선도부 -->
+        <div id="discipline" class="dept-section">
+            <h2 class="dept-title">선도부</h2>
+            <div class="members-info">
+                <span>부장</span> 이재용 | <span>차장</span> 김민규
+            </div>
+            <div class="pledge-group">
+                <div class="pledge-role">부장 공약</div>
+                <ul class="pledge-list">
+                    <li>선도부원 모집 및 교문지도 알림 활성화</li>
+                    <li>학교 규칙 건의함 설치</li>
+                    <li>교문 지도 단속 기준서 제작</li>
+                </ul>
+            </div>
+            <div class="pledge-group">
+                <div class="pledge-role">차장 공약</div>
+                <ul class="pledge-list">
+                    <li>친절한 안내 및 학생 존중</li>
+                    <li>솔선수범을 통한 신뢰 회복</li>
+                    <li>학생 의견 경청 및 학교 분위기 개선</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 홍보부 -->
+        <div id="promotion" class="dept-section">
+            <h2 class="dept-title">홍보부</h2>
+            <div class="members-info">
+                <span>부장</span> 홍은준 | <span>차장</span> 김윤혁
+            </div>
+            <div class="pledge-group">
+                <div class="pledge-role">부장 공약</div>
+                <ul class="pledge-list">
+                    <li>학기별 릴스 3편 제작 및 직접 출연 (교내외 인사 협업)</li>
+                    <li>연합 행사(합동부스 등) 홍보영상 제작 및 타교 협업</li>
+                    <li>교내 커뮤니티 활용 소통 창구 및 공모전 운영</li>
+                    <li>전교생 대상 학교 추억 공유 커뮤니티 신설</li>
+                </ul>
+            </div>
+            <div class="pledge-group">
+                <div class="pledge-role">차장 공약</div>
+                <ul class="pledge-list">
+                    <li>교내 홍보용 영상(릴스) 제작</li>
+                    <li>교내 자랑거리 홍보</li>
+                    <li>학교 관련 질의응답 운영</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 총무부 -->
+        <div id="finance" class="dept-section">
+            <h2 class="dept-title">총무부</h2>
+            <div class="members-info">
+                <span>부장</span> 이승민 | <span>차장</span> 엄유찬
+            </div>
+            <div class="pledge-group">
+                <div class="pledge-role">부장 공약</div>
+                <ul class="pledge-list">
+                    <li>예산 사용 내역 투명 공개</li>
+                    <li>학생회 회의록 작성 및 공유</li>
+                    <li>교내 플리마켓 운영</li>
+                </ul>
+            </div>
+            <div class="pledge-group">
+                <div class="pledge-role">차장 공약</div>
+                <ul class="pledge-list">
+                    <li>투명하고 효율적인 예산 관리 및 공유</li>
+                    <li>디지털 자료 활용을 통한 친환경 행정 운영</li>
+                    <li>밝은 에너지와 유머로 소통하는 창구 마련</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 방송부 -->
+        <div id="broadcasting" class="dept-section">
+            <h2 class="dept-title">방송부</h2>
+            <div class="members-info">
+                <span>부장</span> 이윤호 | <span>차장</span> 이재윤
+            </div>
+            <div class="pledge-group">
+                <div class="pledge-role">부장 공약</div>
+                <ul class="pledge-list">
+                    <li>신입생 맞춤형 학교 구조 안내 영상 제작</li>
+                    <li>학생회 지원 독려를 위한 부서 소개 영상 제작</li>
+                    <li>주요 기념일 맞춤형 테마 사연 라디오 정기 운영</li>
+                </ul>
+            </div>
+            <div class="pledge-group">
+                <div class="pledge-role">차장 공약</div>
+                <ul class="pledge-list">
+                    <li>방송부 운영 기록 저장소(아카이브) 구축</li>
+                    <li>업무 담당제 및 진행 상황 철저 확인</li>
+                    <li>행사 전 점검 및 실수 분석을 통한 완성도 제고</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 체육부 -->
+        <div id="sports" class="dept-section">
+            <h2 class="dept-title">체육부</h2>
+            <div class="members-info">
+                <span>부장</span> 김차형 | <span>차장</span> 홍재화
+            </div>
+            <div class="pledge-group">
+                <div class="pledge-role">부장 공약</div>
+                <ul class="pledge-list">
+                    <li>점심시간 체험형 스포츠 부스 운영</li>
+                    <li>점심시간 축구 및 농구 리그 확대 (학년 간 대항전)</li>
+                    <li>체육 도전의 날 운영 및 비운동 종목 참여 기회 확대</li>
+                    <li>점심시간 헬스장 신청제 운영</li>
+                </ul>
+            </div>
+            <div class="pledge-group">
+                <div class="pledge-role">차장 공약</div>
+                <ul class="pledge-list">
+                    <li>아침 시간 활용 모닝 스포츠 리그 개최</li>
+                    <li>점심시간 다양한 종목 스포츠 리그 개최</li>
+                    <li>점심시간 체력 경연 대회 개최</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 학업부 -->
+        <div id="academic" class="dept-section">
+            <h2 class="dept-title">학업부</h2>
+            <div class="members-info">
+                <span>부장</span> 김기윤 | <span>차장</span> 이진우
+            </div>
+            <div class="pledge-group">
+                <div class="pledge-role">부장 공약</div>
+                <ul class="pledge-list">
+                    <li>교내 공부 자료 저장소 구축 및 공유</li>
+                    <li>온라인 학습 질의응답 게시판 운영</li>
+                    <li>주요 시험 총평 및 고난도 문제 풀이 공유</li>
+                    <li>학습 목표 달성 도전 프로그램 진행 및 상품 증정</li>
+                </ul>
+            </div>
+            <div class="pledge-group">
+                <div class="pledge-role">차장 공약</div>
+                <ul class="pledge-list">
+                    <li>겸손한 자세로 학우들의 이야기 경청</li>
+                    <li>학업 부진 학우 대상 맞춤형 학습 도움 제공</li>
+                    <li>자습 환경 방해 요소 솔선수범 차단</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 문예부 -->
+        <div id="culture" class="dept-section">
+            <h2 class="dept-title">문화예술부</h2>
+            <div class="members-info">
+                <span>부장</span> 김지수 | <span>차장</span> 김시언
+            </div>
+            <div class="pledge-group">
+                <div class="pledge-role">부장 공약</div>
+                <ul class="pledge-list">
+                    <li>학기 말 진로 체험 프로그램 운영 (예술·디자인 계열)</li>
+                    <li>환경부 협업 업사이클링 예술 활동 운영</li>
+                    <li>진로 맞춤형 포트폴리오 제작 활동 지원</li>
+                </ul>
+            </div>
+            <div class="pledge-group">
+                <div class="pledge-role">차장 공약</div>
+                <ul class="pledge-list">
+                    <li>추천 글귀 및 도서 오프라인 게시판 운영</li>
+                    <li>교내 문학 공모전 실시</li>
+                    <li>온라인 맞춤법 및 어휘 퀴즈 행사 실시</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 환경부 -->
+        <div id="environment" class="dept-section">
+            <h2 class="dept-title">환경부</h2>
+            <div class="members-info">
+                <span>부장</span> 김민준 | <span>차장</span> 강지원
+            </div>
+            <div class="pledge-group">
+                <div class="pledge-role">부장 공약</div>
+                <ul class="pledge-list">
+                    <li>야외 운동시설(농구장, 운동장 등) 쓰레기통 설치 및 관리</li>
+                    <li>문예부 협업 환경 웹툰 연재</li>
+                    <li>선도부 협업을 통한 학습 환경 보호</li>
+                </ul>
+            </div>
+            <div class="pledge-group">
+                <div class="pledge-role">차장 공약</div>
+                <ul class="pledge-list">
+                    <li>분리수거 방법 안내 강화 및 배출 문화 조성</li>
+                    <li>학생 참여형 환경 실천 활동 기획</li>
+                    <li>교실 및 복도 환경 정리 상태 정기 점검</li>
+                </ul>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        &copy; 2026-27 충주고등학교 학생회. All rights reserved.
+    </footer>
+
+    <script>
+        // 부서 버튼 클릭 시 해당 섹션만 보여주는 자바스크립트 함수
+        function showSection(sectionId, btnElement) {
+            // 모든 섹션 숨기기
+            var sections = document.querySelectorAll('.dept-section');
+            sections.forEach(function(section) {
+                section.classList.remove('active');
+            });
+
+            // 모든 버튼 활성화 상태 해제
+            var btns = document.querySelectorAll('.tab-btn');
+            btns.forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+
+            // 클릭한 부서 섹션 보여주기
+            document.getElementById(sectionId).classList.add('active');
+            
+            // 클릭한 버튼 색상 변경(활성화)
+            btnElement.classList.add('active');
+        }
+    </script>
+</body>
+</html>
